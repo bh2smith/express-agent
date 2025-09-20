@@ -2,14 +2,16 @@
   "name": "express",
   "type": "module",
   "scripts": {
-    "dev:api": "tsx watch src/index.ts",
-    "dev:agent": "concurrently \"tsx src/index.ts\" \"make-agent dev\"",
+    "build": "tsc",
+    "api": "tsx src/index.ts",
+    "agent": "concurrently \"tsx src/index.ts\" \"make-agent dev\"",
     "lint": "prettier --check src/",
     "fmt": "prettier --write src/"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "swagger-ui-dist": "^5.29.0",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
@@ -18,7 +20,7 @@
     "concurrently": "^9.2.1",
     "make-agent": "^0.4.1",
     "prettier": "^3.6.2",
-    "tsx": "^4.7.0",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
 }

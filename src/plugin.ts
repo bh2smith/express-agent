@@ -21,7 +21,7 @@ export const pluginData = {
   openapi: "3.0.0",
   info: {
     title: "Bitte Express Agent",
-    description: "API for interactions with Uniswap V3",
+    description: "Express API for Bitte Agent",
     version: "1.0.1",
   },
   servers: [{ url: APP_URL }],

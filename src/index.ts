@@ -12,8 +12,10 @@ app.use(cors());
 app.use(express.json());
 
 // Serve Swagger UI at the root path
-app.use("/", swaggerUi.serve);
-app.get("/", swaggerUi.setup(pluginData));
+const swagger = swaggerUi.setup(pluginData, {customCss: '.swagger-ui .topbar { display: none }'})
+app.use("/docs", swaggerUi.serve, swagger);
+// redirect root to /docs
+app.get("/", (_req, res) => res.redirect("/docs"));
 
 app.get("/.well-known/ai-plugin.json", (_, res) => {
   res.json(pluginData);
@@ -21,9 +23,12 @@ app.get("/.well-known/ai-plugin.json", (_, res) => {
 
 app.use("/api/health", healthRouter);
 
-// Add a catch-all handler for other unhandled routes
+app.get(["/favicon.ico", "/favicon-16x16.png", "/favicon-32x32.png"], (_req, res) => {
+  res.status(204).end();
+});
+
+// Catch-all 404
 app.use((req, res) => {
-  // Only log if it's not a service worker or workbox request
   if (
     !req.path.includes("sw.js") &&
     !req.path.includes("workbox") &&

@@ -16,13 +16,14 @@ app.get("/.well-known/ai-plugin.json", (_, res) => {
 });
 app.get("/", (_req, res) => res.redirect("/.well-known/ai-plugin.json"));
 
-
-
 app.use("/api/health", healthRouter);
 
-app.get(["/favicon.ico", "/favicon-16x16.png", "/favicon-32x32.png"], (_req, res) => {
-  res.status(204).end();
-});
+app.get(
+  ["/favicon.ico", "/favicon-16x16.png", "/favicon-32x32.png"],
+  (_req, res) => {
+    res.status(204).end();
+  },
+);
 
 // Catch-all 404
 app.use((req, res) => {

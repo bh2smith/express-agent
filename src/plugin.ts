@@ -1,18 +1,8 @@
 // Dynamically determine the app URL based on environment
-const getAppUrl = () => {
-  // Check for custom production URL
-  if (process.env.PRODUCTION_URL) {
-    return process.env.PRODUCTION_URL;
-  }
-  
-  // Check if we're in production (Vercel sets this automatically)
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
+import { DEPLOYMENT_URL } from "vercel-url";
 
-  // Default to localhost for development
-  const port = process.env.PORT || 3000;
-  return `http://localhost:${port}`;
+const getAppUrl = () => {
+  return DEPLOYMENT_URL || `"localhost:${process.env.PORT || 3000}`;
 };
 
 const APP_URL = getAppUrl();

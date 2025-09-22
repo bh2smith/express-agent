@@ -1,6 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { pluginData } from "./plugin.js";
+import swaggerHandler from "./api/swagger.js";
 import { healthRouter } from "./api/health.js";
 
 const app = express();
@@ -10,12 +11,17 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// redirect root to manifest
+// serve raw manifest
 app.get("/.well-known/ai-plugin.json", (_, res) => {
   res.json(pluginData);
 });
-app.get("/", (_req, res) => res.redirect("/.well-known/ai-plugin.json"));
 
+// Custom Swagger HTML Loader
+app.use("/docs", swaggerHandler);
+// make the home page show docs
+app.get("/", (_req, res) => res.redirect(302, "/docs"));
+
+// Tool Routes
 app.use("/api/health", healthRouter);
 
 app.get(
